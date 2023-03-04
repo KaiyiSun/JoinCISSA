@@ -182,7 +182,6 @@ export const verifyEmailAndCreateUser = async (req, res) => {
   const verifyCode = await veriCodeService.readByEmail(authInfo.email);
 
   if (code === verifyCode?.code) {
-    //res.status(200).json('User Verified');
     const newUser = await userService.create({
       email: authInfo.email,
       first_name: userDetails.firstName,
