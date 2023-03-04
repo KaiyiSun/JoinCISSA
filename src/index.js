@@ -2,12 +2,12 @@ import config from "config";
 import express from "express";
 import cors from "cors";
 import passport from "passport";
-// import { middlewarePassport } from "./web/middleware/passport";
+import { middlewarePassport } from "./web/middleware/passport";
 import { connect } from "./utils/db";
 // import fileupload from "express-fileupload";
 
 import { routes } from "./web/api/routes";
-// import cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 
 const PORT = config.server.port;
 
@@ -26,22 +26,22 @@ const corsOptions = {
 app.use(cors(corsOptions)); // Enable All CORS Requests
 // app.use(express.json({ limit: "2mb" })); // for parsing application/json
 app.use(express.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
-// app.use(cookieParser());
+app.use(cookieParser());
 // app.use(fileupload());
 
 // use passport for authentication
-// console.log("Passport initialize");
-// app.use(passport.initialize()); // passport init
+console.log("Passport initialize");
+app.use(passport.initialize()); // passport init
 
-// console.log("Middleware passport enable");
-// // middlewarePassport(passport);
-// app.use((req, res, next) => {
-//   req.passport = passport;
-//   if (req.method === "OPTIONS") {
-//     res.send(200);
-//   }
-//   next();
-// });
+console.log("Middleware passport enable");
+middlewarePassport(passport);
+app.use((req, res, next) => {
+  req.passport = passport;
+  if (req.method === "OPTIONS") {
+    res.send(200);
+  }
+  next();
+});
 
 // set headers
 app.use(function (req, res, next) {

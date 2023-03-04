@@ -13,7 +13,7 @@ module.exports = {
   },
   db: {
     name: "Local MongoDB",
-    uri: "mongodb://localhost:27017/hackthon",
+    uri: process.env.DB_URI,
   },
   secrets: {
     jwtPrivateKey: process.env.JWT_PRIVATE_KEY,
