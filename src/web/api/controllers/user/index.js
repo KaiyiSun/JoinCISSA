@@ -1,8 +1,49 @@
 import * as userService from "../../../../services/user";
+import * as veriCodeService from "../../../../services/vericode";
 import { auth, revokeToken } from "../../../../services/auth";
 import randomize from "randomatic";
 import { sendEmail, sendVerifyEmail } from "../../../../utils/email/index";
 
+export const registerUser = async (req, res) => {
+  const data = req.body.data;
+  const userDetails = data.userDetails;
+  const authInfo = data.authInfo;
+
+  console.log(`userDetails: ${data.userDetails} authInfo: ${data.authInfo}`);
+
+  // data validation
+  const userDetailSchema = Joi.object().keys({
+    firstName: Joi.string().min(0).max(99).required(),
+    lastName: Joi.string().min(0).max(99).required(),
+  });
+
+  const authInfoSchema = Joi.object().keys({
+    email: Joi.string().min(5).max(255).required().email(),
+    password: Joi.string().min(5).max(255).required(),
+  });
+
+  const userDetailError = userDetailSchema.validate(userDetails).error;
+  const authInfoError = authInfoSchema.validate(authInfo).error;
+
+  if (!(userDetailError == null) || !(authInfoError == null)) {
+    const errorMsg = userDetailError
+      ? userDetailError.details[0].message
+      : authInfoError.details[0].message;
+    console.log(errorMsg);
+    res.status(422).json({
+      message: errorMsg,
+      data: null,
+    });
+    return;
+  }
+
+  const verifyCode = randomize("Aa0!", 6);
+
+  await veriCodeService.create(verifyCode, authInfo.email);
+
+  await sendVerifyEmail(authInfo.email, verifyCode);
+  res.status(200).json("Email sent");
+};
 // export const getUser = async (req, res) => {
 //   const info = {
 //     email: "kaiyis1@student.unimelb.edu.au",
@@ -27,6 +68,7 @@ export const getUser = async (req, res) => {
 
 export const getAllUser = async (_, res) => {
   const users = await userService.readAll();
+  console.log("get all user!");
   res.json({ data: { users } });
 };
 
@@ -107,7 +149,9 @@ export const verifyEmailAndCreateUser = async (req, res) => {
 
   const { code } = req.body.data;
 
-  if (code === verifyCode) {
+  const verifyCode = await veriCodeService.readByEmail(authInfo.email);
+
+  if (code === verifyCode?.code) {
     //res.status(200).json('User Verified');
     const newUser = await userService.create({
       email: authInfo.email,

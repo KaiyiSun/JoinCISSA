@@ -2,11 +2,11 @@ import { isNilOrEmpty } from "ramda-adjunct";
 import { isMongoId } from "validator";
 import { VeriCode } from "../../models";
 
-export const readByUserId = async (user_id) => {
-  const veriCode = await VeriCode.findOne({ user_id });
+export const readByEmail = async (email) => {
+  const veriCode = await VeriCode.findOne({ email });
 
   if (isNilOrEmpty(veriCode)) {
-    console.log(`Cannot find verification code with user id:  ${user_id}`);
+    console.log(`Cannot find verification code with email:  ${email}`);
     return undefined;
   }
 

@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
 import { VeriCode } from "../../models";
 
-export const create = async ({ code, user_id }) => {
+export const create = async ({ code, email }) => {
   var userData = {
     code,
-    user_id,
+    email,
   };
 
   const veriCode = await VeriCode.create(userData);

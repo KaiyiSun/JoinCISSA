@@ -2,10 +2,10 @@
 import { isNilOrEmpty } from "ramda-adjunct";
 import { VeriCode } from "../../models";
 
-export const update = async (user_id, props) => {
-  const veriCode = await VeriCode.findOne({ user_id });
+export const update = async (email, props) => {
+  const veriCode = await VeriCode.findOne({ email });
   if (isNilOrEmpty(veriCode)) {
-    console.log(`Cannot find verification code with user id: ${user_id}`);
+    console.log(`Cannot find verification code with email: ${email}`);
     return undefined;
   }
 
@@ -15,7 +15,7 @@ export const update = async (user_id, props) => {
 
   await veriCode.save();
 
-  const updatedCode = await VeriCode.findOne({ user_id });
+  const updatedCode = await VeriCode.findOne({ email });
 
   return updatedCode;
 };
