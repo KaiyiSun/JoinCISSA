@@ -61,9 +61,17 @@ export const registerUser = async (req, res) => {
 // };
 
 export const getUser = async (req, res) => {
-  const user = await userService.readById(req.user._id);
-  const result = { email: user?.email, name: user?.name };
-  res.json({ user: result });
+  if (req.user) {
+    const user = await userService.readById(req.user._id);
+    const result = { email: user?.email, name: user?.name };
+    res.json({ user: result });
+  } else {
+    console.log(`no user requested`);
+    return res.status(401).json({
+      error: "Unauthorized",
+      message: "No user requested",
+    });
+  }
 };
 
 export const getAllUser = async (_, res) => {
@@ -88,6 +96,13 @@ export const login = async (req, res) => {
   console.log("IP:" + req.ip);
   // logger.debug('', req.body);
   console.log(req.body);
+  if (!req.body.data) {
+    console.log(`Authentication fail. `);
+    return res.status(401).json({
+      error: "Unauthorized",
+      message: "Empty body",
+    });
+  }
   const { email, password } = req.body.data;
   const authResult = await auth({
     email: email,

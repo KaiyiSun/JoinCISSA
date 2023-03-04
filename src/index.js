@@ -24,7 +24,7 @@ const corsOptions = {
 // app.use(express.static(__dirname + "/public"));
 // console.log(__dirname + '/../public');
 app.use(cors(corsOptions)); // Enable All CORS Requests
-// app.use(express.json({ limit: "2mb" })); // for parsing application/json
+app.use(express.json({ limit: "2mb" })); // for parsing application/json
 app.use(express.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
 app.use(cookieParser());
 // app.use(fileupload());
@@ -45,11 +45,11 @@ app.use((req, res, next) => {
 
 // set headers
 app.use(function (req, res, next) {
-  // res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.header("Access-Control-Allow-Origin", "*");
+  // res.header(
+  //   "Access-Control-Allow-Headers",
+  //   "Origin, X-Requested-With, Content-Type, Accept"
+  // );
   next();
 });
 
