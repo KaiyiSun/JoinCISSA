@@ -6,6 +6,7 @@ import {
   verifyEmailAndCreateUser,
   loginRouterPath,
   updateUserRouterPath,
+  emailCheckPath,
 } from "../constant";
 
 import { userController } from "../../controllers";
@@ -18,6 +19,7 @@ router.get(getAllUserRouterPath, userController.getAllUser);
 router.get(getUserRouterPath, userController.getUser);
 
 router.post(registerRouterPath, userController.registerUser);
+router.post(emailCheckPath, userController.checkEmailExists);
 router.post(verifyEmailAndCreateUser, userController.verifyEmailAndCreateUser);
 router.post(loginRouterPath, userController.login);
 

@@ -3,13 +3,14 @@ import * as veriCodeService from "../../../../services/vericode";
 import { auth, revokeToken } from "../../../../services/auth";
 import randomize from "randomatic";
 import { sendEmail, sendVerifyEmail } from "../../../../utils/email/index";
+import Joi from "joi";
 
 export const registerUser = async (req, res) => {
   const data = req.body.data;
   const userDetails = data.userDetails;
   const authInfo = data.authInfo;
 
-  console.log(`userDetails: ${data.userDetails} authInfo: ${data.authInfo}`);
+  console.log(`userDetails: ${userDetails} authInfo: ${data.authInfo}`);
 
   // data validation
   const userDetailSchema = Joi.object().keys({
@@ -39,7 +40,7 @@ export const registerUser = async (req, res) => {
 
   const verifyCode = randomize("Aa0!", 6);
 
-  await veriCodeService.create(verifyCode, authInfo.email);
+  await veriCodeService.create({ code: verifyCode, email: authInfo.email });
 
   await sendVerifyEmail(authInfo.email, verifyCode);
   res.status(200).json("Email sent");
@@ -59,6 +60,20 @@ export const registerUser = async (req, res) => {
 //   const result = { email: user?.email, name: user?.name };
 //   res.json({ user: result });
 // };
+export const checkEmailExists = async (req, res) => {
+  const email = req.body.data;
+
+  const data = await userService.readByEmail(email);
+
+  if (data) {
+    return res.status(409).json({
+      error: "Email exists",
+      message: `User with email ${email} exists`,
+    });
+  } else {
+    return res.status(200).json("Success");
+  }
+};
 
 export const getUser = async (req, res) => {
   if (req.user) {
