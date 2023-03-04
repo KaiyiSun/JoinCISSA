@@ -8,6 +8,9 @@ const logoutRouterPath = root + "/logout";
 const registerRouterPath = root + "/register";
 const verifyEmailAndCreateUser = root + "/register/verify";
 
+
+const getReviewRouterPath = root + "/review"
+
 export {
   getUserRouterPath,
   getAllUserRouterPath,
@@ -16,4 +19,5 @@ export {
   logoutRouterPath,
   registerRouterPath,
   verifyEmailAndCreateUser,
+  getReviewRouterPath,
 };
