@@ -3,7 +3,7 @@ import config from "config";
 import mongoose from "mongoose";
 
 export const connect = async (connectDbUri, connOptions = {}) => {
-  console.log("--------------------------------------HERE!----------------");
+  // console.log("--------------------------------------HERE!----------------");
   const dbUri = connectDbUri || config.db.uri;
   const options = {
     autoIndex: false, // Don't build indexes

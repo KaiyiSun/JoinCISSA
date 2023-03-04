@@ -13,7 +13,7 @@ module.exports = {
   },
   db: {
     name: "Local MongoDB",
-    uri: "mongodb+srv://kaiyis1:hMZLB0Paw2gQE5DP@joincissa.eafohpa.mongodb.net/?retryWrites=true&w=majority",
+    uri: "mongodb://localhost:27017/hackthon",
   },
   secrets: {
     jwtPrivateKey: process.env.JWT_PRIVATE_KEY,
@@ -21,7 +21,7 @@ module.exports = {
   test: {
     db: {
       name: "MongoDB",
-      uri: "mongodb+srv://kaiyis1:hMZLB0Paw2gQE5DP@joincissa.eafohpa.mongodb.net/?retryWrites=true&w=majority",
+      uri: "mongodb://localhost:27017/hackthon",
     },
   },
 };

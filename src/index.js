@@ -61,7 +61,7 @@ routes.forEach((route) => {
 console.log(config.db.uri);
 
 const startServer = async () => {
-  // await connect(config.db.uri);
+  await connect(config.db.uri);
 
   // const port = config.get('server.port');
   app.listen(PORT, () => {
