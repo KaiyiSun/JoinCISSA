@@ -6,6 +6,6 @@ import { passportAuth } from "../../../middleware/auth";
 
 const router = Router();
 
-router.get(getReviewRouterPath, reviewController.getReview);
+router.post(getReviewRouterPath, reviewController.postReview);
 
 export { router };
