@@ -2,4 +2,6 @@ const root = "/api";
 
 const getUserRouterPath = root + "/user";
 
-export { getUserRouterPath };
+const getReviewRouterPath = root + "/review"
+
+export { getUserRouterPath, getReviewRouterPath };
