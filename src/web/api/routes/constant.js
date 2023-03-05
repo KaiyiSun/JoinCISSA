@@ -11,6 +11,11 @@ const emailCheckPath = root + "/check/email";
 
 const getReviewRouterPath = root + "/review";
 
+const newFilePath = root + "/file/new";
+const updateFilePath = root + "file/update";
+const getAllFilePath = root + "file/all";
+const analyzeFilePath = root + "file/analyze";
+
 export {
   getUserRouterPath,
   getAllUserRouterPath,
@@ -21,4 +26,8 @@ export {
   verifyEmailAndCreateUser,
   getReviewRouterPath,
   emailCheckPath,
+  newFilePath,
+  updateFilePath,
+  getAllFilePath,
+  analyzeFilePath,
 };

@@ -17,6 +17,12 @@ const fileSchema = new Schema(
       ref: "User",
       required: true,
     },
+    score: {
+      type: Number,
+    },
+    comment: {
+      type: String,
+    },
   },
   {
     timestamps: {
