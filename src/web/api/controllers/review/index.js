@@ -4,11 +4,7 @@ import randomize from "randomatic";
 import { sendEmail, sendVerifyEmail } from "../../../../utils/email/index";
 import {review} from "../../../../utils/chatgpt";
 
-const cors = require('cors');
-const express = require('express');
-const app = express();
 
-app.use(cors());
 
 export const postReview = async (req, res) => {
   // const data = {
