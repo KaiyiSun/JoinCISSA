@@ -16,7 +16,7 @@ const router = Router();
 
 // router.get(getUserRouterPath, [passportAuth], userController.getUser);
 router.get(getAllUserRouterPath, userController.getAllUser);
-router.get(getUserRouterPath, userController.getUser);
+router.get(getUserRouterPath, [passportAuth], userController.getUser);
 
 router.post(registerRouterPath, userController.registerUser);
 router.post(emailCheckPath, userController.checkEmailExists);
